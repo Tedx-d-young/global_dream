@@ -1,0 +1,9 @@
+<?php
+require __DIR__.'/includes/bootstrap.php';
+$id=filter_input(INPUT_GET,'id',FILTER_VALIDATE_INT);
+$stmt=$pdo->prepare("SELECT * FROM scholarships WHERE id=? AND status='published'");$stmt->execute([$id?:0]);$s=$stmt->fetch();
+if(!$s){http_response_code(404);$pageTitle='Not found';require __DIR__.'/includes/header.php';echo '<main class="section"><h1>Scholarship not found</h1><a href="index.php">Return home</a></main>';require __DIR__.'/includes/footer.php';exit;}
+$pageTitle=$s['title'];require __DIR__.'/includes/header.php';
+?>
+<main class="detail-wrap"><a class="text-link" href="index.php#scholarships">← Back to scholarships</a><article class="detail-card"><span class="funding-tag"><?= e($s['funding_type']) ?></span><p class="provider"><?= e($s['provider']) ?></p><h1><?= e($s['title']) ?></h1><div class="detail-meta"><span>Country: <b><?= e($s['country']) ?></b></span><span>Level: <b><?= e($s['study_level']) ?></b></span><span>Deadline: <b><?= $s['deadline']?e(date('d M Y',strtotime($s['deadline']))):'Check official site' ?></b></span></div><h2>About this opportunity</h2><p><?= nl2br(e($s['description'] ?: $s['summary'])) ?></p><?php if($s['eligibility']): ?><h2>Eligibility</h2><p><?= nl2br(e($s['eligibility'])) ?></p><?php endif; ?><?php if($s['documents']): ?><h2>Documents to check</h2><p><?= nl2br(e($s['documents'])) ?></p><?php endif; ?><div class="notice">Always verify the deadline, eligibility, funding coverage, and application process on the official provider website.</div><?php if($s['official_url'] && valid_http_url($s['official_url'])): ?><a class="button" target="_blank" rel="noopener noreferrer" href="<?= e($s['official_url']) ?>">Open official source ↗</a><?php endif; ?><p class="muted">Source type: <?= e($s['source_name'] ?: 'Manually added') ?>. Last updated: <?= e(date('d M Y',strtotime($s['updated_at']))) ?></p></article></main>
+<?php require __DIR__.'/includes/footer.php'; ?>

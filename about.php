@@ -1,0 +1,3 @@
+<?php require __DIR__.'/includes/bootstrap.php'; $pageTitle='About'; require __DIR__.'/includes/header.php'; ?>
+<main class="section narrow"><span class="eyebrow">ABOUT GLOBAL DREAM</span><h1>Helping students find their next opportunity.</h1><p>Global Dream organizes scholarship information and points students to official sources. Some listings may be discovered from permitted public feeds, but automated discovery is not the same as verification.</p><p>We review discovered items before publication to reduce inaccurate deadlines, misleading funding claims, and duplicate posts.</p><p><strong>Global Dream is an independent information website, not a scholarship provider.</strong></p></main>
+<?php require __DIR__.'/includes/footer.php'; ?>
